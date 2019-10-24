@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Camera4NotSave</string>
+
+    <string name="capture">拍照</string>
+    <string name="capture_again">重拍</string>
+    <string name="finish">完成</string>
+
+</resources>
