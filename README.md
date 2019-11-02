@@ -3,3 +3,4 @@
 - ServiceAndMultiThread：服务与多线程
 - TestNDK：关于NDK测试Demo
 - Camera4NotSave：自定义相机，不保存照片，可获得照片数据，可预览
+-  AppUninstall：调用系统卸载app的Demo
