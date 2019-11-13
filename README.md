@@ -1,6 +1,7 @@
 - BroadcastBestPractice:广播最佳实践-实现强制下线功能
 - BroadcastReceiver：广播接收器Demo
-- ServiceAndMultiThread：服务与多线程
+- ServiceAndMultiThread：服务与多线程（圆圈对话框百分比）
 - TestNDK：关于NDK测试Demo
 - Camera4NotSave：自定义相机，不保存照片，可获得照片数据，可预览
--  AppUninstall：调用系统卸载app的Demo
+- AppUninstall：调用系统卸载app的Demo
+- HorizontalPercentProgressDialog：水平进度条对话框
