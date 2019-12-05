@@ -5,3 +5,5 @@
 - Camera4NotSave：自定义相机，不保存照片，可获得照片数据，可预览
 - AppUninstall：调用系统卸载app的Demo
 - HorizontalPercentProgressDialog：水平进度条对话框
+- NFCRWDemo：多种数据格式NFC标签读写Demo
+- NFCTest：NDEF数据格式NFC标签读写Demo
