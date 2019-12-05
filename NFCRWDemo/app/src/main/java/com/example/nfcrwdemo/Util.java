@@ -58,6 +58,17 @@ public class Util {
         return output;
     }
 
+    // 16进制字符串还原为 byte[]
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i + 1), 16));
+        }
+        return data;
+    }
+
     // pieces = {6, 4, 7, 9, 6}; // byte 分段逆序
     public static byte[] shuffleSHA256(byte[] bytes, int[] pieces) {
         if (pieces == null || pieces.length == 0) {

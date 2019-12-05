@@ -206,13 +206,13 @@ public class NFCWriteActivity extends AppCompatActivity {
             Toast.makeText(mContext, "请填写内容!", Toast.LENGTH_SHORT).show();
             return;
         }
-        handle_key(content);
-        NdefRecord[] records = {Util.createTextRecord(content)};
+        String shuffleSha256Str = handle_key(content);
+        NdefRecord[] records = {Util.createTextRecord(shuffleSha256Str)};
         writeNFCTag(tag, new NdefMessage(records));
     }
 
     // 密钥处理
-    private void handle_key(String str) {
+    private String handle_key(String str) {
         byte[] md5 = Util.encode("MD5", str);
         byte[] sha256 = Util.encode("SHA-256", str);
         byte[] shuffleSha256 = Util.shuffleSHA256(sha256.clone(), null);
@@ -232,6 +232,11 @@ public class NFCWriteActivity extends AppCompatActivity {
         Log.d(TAG, "handle_key: shuffleSha256 " + shuffleSha256Str);
         Log.d(TAG, "handle_key: restoreSha256 " + restoreSha256Str);
         Log.d(TAG, "handle_key: sha256 == restoreSha256 ?" + Arrays.equals(sha256, restoreSha256));
+        Log.d(TAG, "handle_key: byte[] md5 == md5Str restore md5 ?" + Arrays.equals(md5, Util.hexStringToByteArray(md5Str)));
+        for (byte b : sha256) {
+            Log.d(TAG, "handle_key: sha256-byte " + b);
+        }
+        return shuffleSha256Str;
     }
 
 

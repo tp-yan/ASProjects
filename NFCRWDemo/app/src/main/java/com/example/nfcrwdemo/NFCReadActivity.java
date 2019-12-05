@@ -77,7 +77,12 @@ public class NFCReadActivity extends BaseNFCActivity {
 
 
         String result = "";
-        result = readNdefTag(intent); // 这里只读取NDEF格式的数据
+        result = readNdefTag(intent).trim(); // 这里只读取NDEF格式的数据
+        if (result.startsWith("zh") || result.startsWith("ZH")) {
+            result = result.replace("zh","");
+            result = result.replace("ZH","");
+        }
+        Log.d(TAG, "onNewIntent: result: "+result);
         tv_content.setText(result + "");
     }
 
