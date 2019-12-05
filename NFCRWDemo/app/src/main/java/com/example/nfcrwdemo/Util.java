@@ -1,9 +1,13 @@
-package com.example.nfctest;
+package com.example.nfcrwdemo;
 
 import android.nfc.NdefRecord;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -12,6 +16,28 @@ import java.util.Locale;
  * Description:
  */
 public class Util {
+    private static final String TAG = "Util";
+
+    /**
+     * 将字符串hash编码，返回16进制字符串
+     *
+     * @param algorithm MD5 或 SHA-1、SHA-256等
+     * @param str       输入字符串
+     * @return
+     */
+    public static byte[] encode(String algorithm, String str) {
+        if (str == null) {
+            return null;
+        }
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+            messageDigest.update(str.getBytes());
+            return messageDigest.digest();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     //转换法2   格式为  ABCD1234 字母大写
     public static String ByteArrayToHexString(byte[] bytesId) {   //Byte数组转换为16进制字符串
@@ -30,6 +56,37 @@ public class Util {
             output += hex[i];
         }
         return output;
+    }
+
+    // pieces = {6, 4, 7, 9, 6}; // byte 分段逆序
+    public static byte[] shuffleSHA256(byte[] bytes, int[] pieces) {
+        if (pieces == null || pieces.length == 0) {
+            pieces = new int[]{6, 4, 7, 9, 6};
+        }
+
+        int total = 0;
+        for (int a : pieces) {
+            total += a;
+        }
+
+        if (bytes.length != total) {
+            Log.d(TAG, "shuffleSHA256: 参数配置不正确");
+            return null;
+        }
+        total = 0;
+        for (int i = 0; i < pieces.length; i++) {
+            int num = pieces[i];
+            ArrayList<Byte> byteArrayList = new ArrayList<>();
+            for (int j = total; j < total + num; j++) {
+                byteArrayList.add(bytes[j]);
+            }
+            Collections.reverse(byteArrayList);
+            for (int j = total; j < total + num; j++) {
+                bytes[j] = byteArrayList.get(j - total);
+            }
+            total += num;
+        }
+        return bytes;
     }
 
     //转换法1   格式为0xabcd1234  字母小写
@@ -104,6 +161,7 @@ public class Util {
 
     /**
      * 将普通文本转化成 NdefRecord
+     *
      * @param text
      * @return
      */

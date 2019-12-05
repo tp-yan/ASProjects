@@ -1,4 +1,4 @@
-package shenlan.wangzhe.com.nfcapplication;
+package com.example.nfctest;
 
 import android.nfc.NdefRecord;
 

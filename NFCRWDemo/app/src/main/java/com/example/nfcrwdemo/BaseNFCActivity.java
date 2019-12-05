@@ -1,4 +1,4 @@
-package com.example.nfctest;
+package com.example.nfcrwdemo;
 
 import android.app.PendingIntent;
 import android.content.Intent;

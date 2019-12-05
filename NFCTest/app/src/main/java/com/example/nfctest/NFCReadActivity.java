@@ -27,16 +27,16 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static shenlan.wangzhe.com.nfcapplication.Util.ByteArrayToHexString;
+import static com.example.nfctest.Util.ByteArrayToHexString;
+
 
 /**
  * 读卡信息 (继承baseNFC)
- *
- *  大部分内容来自：CSDN博主「未曾远去」的原创文章
- *
- *  版权声明：本文为CSDN博主「未曾远去」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
- *  原文链接：https://blog.csdn.net/qq_36135335/article/details/82463179
- *
+ * <p>
+ * 大部分内容来自：CSDN博主「未曾远去」的原创文章
+ * <p>
+ * 版权声明：本文为CSDN博主「未曾远去」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+ * 原文链接：https://blog.csdn.net/qq_36135335/article/details/82463179
  */
 public class NFCReadActivity extends BaseNFCActivity {
 
@@ -110,6 +110,7 @@ public class NFCReadActivity extends BaseNFCActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         Tag mTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String[] techList = mTag.getTechList();
 
@@ -164,7 +165,6 @@ public class NFCReadActivity extends BaseNFCActivity {
 
         tv_content.setText(result + "");
     }
-
 
 
     private int bCount;
@@ -310,6 +310,7 @@ public class NFCReadActivity extends BaseNFCActivity {
 
     /**
      * step3: NfcB格式 一般用于身份证信息识别
+     *
      * @param
      */
     private String readNfcBTag(Tag tag) {
@@ -318,14 +319,14 @@ public class NFCReadActivity extends BaseNFCActivity {
             nfcbTag.connect();
             if (nfcbTag.isConnected()) {
 
-                Toast.makeText(this, "身份证已连接",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "身份证已连接", Toast.LENGTH_SHORT).show();
 
                 return "身份证已连接";
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (nfcbTag != null) {
                 try {
                     nfcbTag.close();
@@ -340,6 +341,7 @@ public class NFCReadActivity extends BaseNFCActivity {
 
     /**
      * step4: NfcF 格式 数据读取
+     *
      * @param mTag
      */
     private String readNfcFTag(Tag mTag) {
@@ -354,9 +356,9 @@ public class NFCReadActivity extends BaseNFCActivity {
 //            setNoteBody(ByteArrayToHexString(res));
 
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage() , e);
-        }finally {
-            if (null != nfc){
+            Log.e(TAG, e.getMessage(), e);
+        } finally {
+            if (null != nfc) {
                 try {
                     nfc.close();
                 } catch (IOException e) {
@@ -370,6 +372,7 @@ public class NFCReadActivity extends BaseNFCActivity {
 
     /**
      * step5: NfcV 格式
+     *
      * @param mTag
      * @return
      */
@@ -382,16 +385,16 @@ public class NFCReadActivity extends BaseNFCActivity {
                     byte[] tagUid = mTag.getId();
                     int blockAddress = 0;
                     int blocknum = 4;
-                    byte[] cmd = new byte[] {
-                            (byte)0x22,  // FLAGS
-                            (byte)0x23,  // 20-READ_SINGLE_BLOCK,23-所有块
-                            0, 0, 0, 0, 0, 0, 0,0,
-                            (byte)(blockAddress & 0x0ff),(byte)(blocknum-1 & 0x0ff)
+                    byte[] cmd = new byte[]{
+                            (byte) 0x22,  // FLAGS
+                            (byte) 0x23,  // 20-READ_SINGLE_BLOCK,23-所有块
+                            0, 0, 0, 0, 0, 0, 0, 0,
+                            (byte) (blockAddress & 0x0ff), (byte) (blocknum - 1 & 0x0ff)
                     };
                     System.arraycopy(tagUid, 0, cmd, 2, tagUid.length);
                     byte[] response = tech.transceive(cmd);
                     tech.close();
-                    if(response!=null){
+                    if (response != null) {
                         // setNoteBody(new String(response, Charset.forName("utf-8")));
                     }
                 }
@@ -437,6 +440,7 @@ public class NFCReadActivity extends BaseNFCActivity {
 
     /**
      * step:8 Ultralight格式读取
+     *
      * @param tag
      * @return
      */
@@ -597,7 +601,6 @@ public class NFCReadActivity extends BaseNFCActivity {
                 .put(aid).put((byte) 0x00); // Le
         return cmd_pse.array();
     }
-
 
 
     private ArrayList<byte[]> parseRecords(byte[] Records) {

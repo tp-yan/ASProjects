@@ -10,20 +10,20 @@
         android:id="@+id/aaa"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="点击进入NFC卡信息查询"
-        android:onClick="onClick"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_centerInParent="true" />
+        android:onClick="onClick"
+        android:text="点击进入NFC卡信息查询" />
 
     <TextView
         android:id="@+id/abc"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="点击NFC命令写入"
-        android:onClick="onClick"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/aaa"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/aaa"/>
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="点击NFC命令写入" />
 
 </RelativeLayout>
